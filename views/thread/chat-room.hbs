@@ -1,0 +1,36 @@
+<div class="container chat-wrapper">
+  <div class="wrapper chat">
+    {{#each messages}}
+      {{#if this.isLink}}
+        <a class="thread-message {{this.position}}" href="{{this.message}}" target="_blank">{{this.message}}</a>
+        {{#if this.isImage}}
+          <img class="message-img" src="{{this.message}}">
+        {{/if}}
+        {{else}}
+          
+          <div class="thread-message {{this.position}}">
+            {{#if this.isLeft}}
+              <form action="/message/{{this.id}}/{{this.action}}" method="GET">
+                <input type="submit" value="{{this.action}}"/>
+              </form> 
+            {{/if}}
+            <span>{{this.message}}</span>
+          </div>
+      {{/if}}
+      
+      <div class="clear"></div>
+    {{/each}}
+  </div>
+  <div class="wrapper">
+    {{#if messages.blocked}}
+    <h2>You are blocked.</h2>
+    {{else}}
+    <form method="post" action="/thread/{{otherUser}}">
+      <div class="form-group">
+        <textarea class="input-field" id="chat-form" name="content"></textarea>
+        <input class="btn btn-primary" type="submit" value="Send" />
+      </div>
+    </form>
+    {{/if}}
+  </div>
+</div>
